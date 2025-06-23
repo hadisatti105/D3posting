@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Lead</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 40px;
+        }
+
+        form {
+            background: white;
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>Lead Submission Form</h2>
+    <form method="POST" action="/submit-lead">
+        <label>First Name:</label><input type="text" name="first_name" required>
+        <label>Last Name:</label><input type="text" name="last_name" required>
+        <label>Email:</label><input type="email" name="email" required>
+        <label>Phone:</label><input type="tel" name="caller_id" required>
+        <label>State (abbr):</label><input type="text" name="state" maxlength="2" required>
+        <label>Zip Code:</label><input type="text" name="zip" required>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
