@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Submit Lead</title>
+    <title>Lead Submission Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -10,7 +10,6 @@
             margin: 0;
             padding: 40px;
         }
-
         form {
             background: white;
             max-width: 500px;
@@ -19,19 +18,16 @@
             border-radius: 8px;
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
-
         h2 {
             text-align: center;
             margin-bottom: 20px;
             color: #333;
         }
-
         label {
             display: block;
             margin: 15px 0 5px;
             font-weight: bold;
         }
-
         input[type="text"],
         input[type="email"],
         input[type="tel"],
@@ -43,7 +39,6 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-
         input[type="submit"] {
             background-color: #4CAF50;
             color: white;
@@ -52,7 +47,6 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
         input[type="submit"]:hover {
             background-color: #45a049;
         }
@@ -61,13 +55,25 @@
 <body>
     <h2>Lead Submission Form</h2>
     <form method="POST" action="/submit-lead">
-        <label>First Name:</label><input type="text" name="first_name" required>
-        <label>Last Name:</label><input type="text" name="last_name" required>
-        <label>Email:</label><input type="email" name="email" required>
-        <label>Phone:</label><input type="tel" name="caller_id" required>
-        <label>State (abbr):</label><input type="text" name="state" maxlength="2" required>
-        <label>Zip Code:</label><input type="text" name="zip" required>
-        <input type="submit" value="Submit">
+        <label>First Name:</label>
+        <input type="text" name="first_name" required>
+
+        <label>Last Name:</label>
+        <input type="text" name="last_name" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Phone Number:</label>
+        <input type="tel" name="caller_id" required>
+
+        <label>State (abbr):</label>
+        <input type="text" name="state" maxlength="2" required>
+
+        <label>Zip Code:</label>
+        <input type="text" name="zip" required>
+
+        <input type="submit" value="Submit Lead">
     </form>
 </body>
 </html>
