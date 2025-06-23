@@ -2,76 +2,37 @@
 <html>
 <head>
     <title>Lead Submission Form</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 40px;
-        }
-        form {
-            background: white;
-            max-width: 500px;
-            margin: auto;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        label {
-            display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            margin-top: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
 </head>
 <body>
-    <h2>Lead Submission Form</h2>
+    <h2>Submit Your Lead</h2>
     <form method="POST" action="/submit-lead">
-        <label>First Name:</label>
-        <input type="text" name="first_name" required>
+        <!-- Ping Fields -->
+        <label>Trackdrive Number:</label><input name="trackdrive_number" required><br>
+        <label>Traffic Source ID:</label><input name="traffic_source_id" required><br>
+        <label>Caller ID:</label><input name="caller_id" required><br>
 
-        <label>Last Name:</label>
-        <input type="text" name="last_name" required>
+        <!-- Basic Lead Fields -->
+        <label>First Name:</label><input name="first_name" required><br>
+        <label>Last Name:</label><input name="last_name" required><br>
+        <label>Email:</label><input name="email" type="email" required><br>
+        <label>State (2-letter code):</label><input name="state" maxlength="2" required><br>
+        <label>Zip Code:</label><input name="zip" required><br>
 
-        <label>Email:</label>
-        <input type="email" name="email" required>
+        <!-- Buyer Matching Fields -->
+        <label>Accident State:</label><input name="accident_state" required><br>
+        <label>Accident Date:</label><input name="accident_date" placeholder="YYYY-MM-DD" required><br>
+        <label>Has Insurance:</label><input name="has_insurance" required><br>
+        <label>Injury Occurred:</label><input name="injury_occured" required><br>
+        <label>Hospitalized or Treated:</label><input name="hospitalized_or_treated" required><br>
+        <label>Person at Fault:</label><input name="person_at_fault" required><br>
+        <label>Currently Represented:</label><input name="currently_represented" required><br>
 
-        <label>Phone Number:</label>
-        <input type="tel" name="caller_id" required>
-
-        <label>State (abbr):</label>
-        <input type="text" name="state" maxlength="2" required>
-
-        <label>Zip Code:</label>
-        <input type="text" name="zip" required>
+        <!-- Compliance -->
+        <label>Trusted Form Cert URL:</label><input name="trusted_form_cert_url" required><br>
+        <label>TCPA Consent Language:</label>
+        <textarea name="tcpa_optin_consent_language" required>
+I consent to being contacted via the phone number I provided in accordance with TCPA regulations.
+        </textarea><br>
 
         <input type="submit" value="Submit Lead">
     </form>
