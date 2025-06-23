@@ -1,99 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Lead Submission Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Lead</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f9fc;
-            padding: 40px;
+            background: #eef2f7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px 10px;
         }
-    
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
         h2 {
             text-align: center;
-            color: #333;
+            color: #2c3e50;
+            margin-bottom: 30px;
         }
-    
-        form {
-            max-width: 500px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-    
-        label {
+
+        form label {
+            font-weight: bold;
             display: block;
             margin-bottom: 5px;
-            font-weight: bold;
-            color: #444;
+            color: #333;
         }
-    
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="date"],
-        textarea {
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="tel"],
+        form input[type="date"],
+        form select {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            font-size: 15px;
         }
-    
-        textarea {
-            resize: vertical;
-        }
-    
-        input[type="submit"] {
+
+        form input[type="submit"] {
             background-color: #007BFF;
             color: white;
-            padding: 12px 20px;
+            padding: 14px 20px;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            border-radius: 6px;
             font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
         }
-    
-        input[type="submit"]:hover {
+
+        form input[type="submit"]:hover {
             background-color: #0056b3;
         }
-    </style>    
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Submit Your Lead</h2>
-    <form method="POST" action="/submit-lead">
-        <!-- Ping Fields -->
-        <label>Trackdrive Number:</label><input name="trackdrive_number" required><br>
-        <label>Traffic Source ID:</label><input name="traffic_source_id" required><br>
-        <label>Caller ID:</label><input name="caller_id" required><br>
+    <div class="container">
+        <h2>Submit Your Lead</h2>
+        <form method="POST" action="/submit-lead">
+            <label>Trackdrive Number:</label>
+            <input type="text" name="trackdrive_number" required>
 
-        <!-- Basic Lead Fields -->
-        <label>First Name:</label><input name="first_name" required><br>
-        <label>Last Name:</label><input name="last_name" required><br>
-        <label>Email:</label><input name="email" type="email" required><br>
-        <label>State (2-letter code):</label><input name="state" maxlength="2" required><br>
-        <label>Zip Code:</label><input name="zip" required><br>
+            <label>Traffic Source ID:</label>
+            <input type="text" name="traffic_source_id" required>
 
-        <!-- Buyer Matching Fields -->
-        <label>Accident State:</label><input name="accident_state" required><br>
-        <label>Accident Date:</label><input name="accident_date" placeholder="YYYY-MM-DD" required><br>
-        <label>Has Insurance:</label><input name="has_insurance" required><br>
-        <label>Injury Occurred:</label><input name="injury_occured" required><br>
-        <label>Hospitalized or Treated:</label><input name="hospitalized_or_treated" required><br>
-        <label>Person at Fault:</label><input name="person_at_fault" required><br>
-        <label>Currently Represented:</label><input name="currently_represented" required><br>
+            <label>Caller ID:</label>
+            <input type="text" name="caller_id" required>
 
-        <!-- Compliance -->
-        <label>Trusted Form Cert URL:</label><input name="trusted_form_cert_url" required><br>
-        <label>TCPA Consent Language:</label>
-        <textarea name="tcpa_optin_consent_language" required>
-I consent to being contacted via the phone number I provided in accordance with TCPA regulations.
-        </textarea><br>
+            <label>First Name:</label>
+            <input type="text" name="first_name" required>
 
-        <input type="submit" value="Submit Lead">
-    </form>
+            <label>Last Name:</label>
+            <input type="text" name="last_name" required>
+
+            <label>Email:</label>
+            <input type="email" name="email" required>
+
+            <label>State (2-letter code):</label>
+            <input type="text" name="state" maxlength="2" required>
+
+            <label>Zip Code:</label>
+            <input type="text" name="zip" required>
+
+            <label>Accident State:</label>
+            <input type="text" name="accident_state">
+
+            <label>Accident Date:</label>
+            <input type="date" name="accident_date">
+
+            <label>Has Insurance:</label>
+            <input type="text" name="has_insurance">
+
+            <label>Injury Occurred:</label>
+            <input type="text" name="injury_occured">
+
+            <label>Currently Represented:</label>
+            <input type="text" name="currently_represented">
+
+            <label>Person at Fault:</label>
+            <input type="text" name="person_at_fault">
+
+            <label>Hospitalized or Treated:</label>
+            <input type="text" name="hospitalized_or_treated">
+
+            <label>Auto Accident in Past 2 Years:</label>
+            <input type="text" name="auto_accident_in_past_2_years">
+
+            <label>Trusted Form URL:</label>
+            <input type="text" name="trusted_form_cert_url">
+
+            <input type="submit" value="Submit Lead">
+        </form>
+    </div>
 </body>
 </html>
