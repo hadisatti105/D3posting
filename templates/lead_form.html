@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Your Lead</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             background: #eef2f7;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
             padding: 40px 10px;
         }
 
@@ -24,50 +23,29 @@
         h2 {
             text-align: center;
             color: #2c3e50;
-            margin-bottom: 30px;
         }
 
         label {
-            font-weight: bold;
             display: block;
-            margin-bottom: 5px;
-            color: #333;
+            font-weight: bold;
+            margin: 10px 0 5px;
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="date"],
-        select {
+        input, select {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 6px;
-            background-color: #f9f9f9;
             font-size: 15px;
-        }
-
-        .radio-group {
-            margin-bottom: 20px;
-        }
-
-        .radio-group label {
-            font-weight: normal;
-            margin-right: 15px;
         }
 
         input[type="submit"] {
             background-color: #007BFF;
             color: white;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s ease;
+            font-weight: bold;
+            transition: background 0.3s;
         }
 
         input[type="submit"]:hover {
@@ -75,9 +53,7 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
+            .container { padding: 20px; }
         }
     </style>
 </head>
@@ -85,10 +61,6 @@
 <div class="container">
     <h2>Submit Your Lead</h2>
     <form method="POST" action="/submit-lead">
-        <!-- Hardcoded fields -->
-        <input type="hidden" name="trackdrive_number" value="+18882574485">
-        <input type="hidden" name="traffic_source_id" value="1049">
-
         <label>Caller ID:</label>
         <input type="text" name="caller_id" required>
 
@@ -101,58 +73,60 @@
         <label>Email:</label>
         <input type="email" name="email" required>
 
-        <label>State (2-letter code):</label>
-        <input type="text" name="state" maxlength="2" required>
+        <label>State:</label>
+        <input type="text" name="state" required maxlength="2">
 
         <label>Zip Code:</label>
         <input type="text" name="zip" required>
 
         <label>Accident State:</label>
-        <input type="text" name="accident_state">
+        <input type="text" name="accident_state" required>
 
         <label>Accident Date:</label>
-        <input type="date" name="accident_date">
-
-        <!-- YES/NO RADIO BUTTONS -->
+        <input type="date" name="accident_date" required>
 
         <label>Has Insurance:</label>
-        <div class="radio-group">
-            <label><input type="radio" name="has_insurance" value="yes" required> Yes</label>
-            <label><input type="radio" name="has_insurance" value="no"> No</label>
-        </div>
+        <select name="has_insurance" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
         <label>Injury Occurred:</label>
-        <div class="radio-group">
-            <label><input type="radio" name="injury_occured" value="yes" required> Yes</label>
-            <label><input type="radio" name="injury_occured" value="no"> No</label>
-        </div>
+        <select name="injury_occured" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
         <label>Currently Represented:</label>
-        <div class="radio-group">
-            <label><input type="radio" name="currently_represented" value="yes" required> Yes</label>
-            <label><input type="radio" name="currently_represented" value="no"> No</label>
-        </div>
+        <select name="currently_represented" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
         <label>Person at Fault:</label>
-        <div class="radio-group">
-            <label><input type="radio" name="person_at_fault" value="yes" required> Yes</label>
-            <label><input type="radio" name="person_at_fault" value="no"> No</label>
-        </div>
+        <select name="person_at_fault" required>
+            <option value="Self">Self</option>
+            <option value="Other party">Other party</option>
+        </select>
 
         <label>Hospitalized or Treated:</label>
-        <div class="radio-group">
-            <label><input type="radio" name="hospitalized_or_treated" value="yes" required> Yes</label>
-            <label><input type="radio" name="hospitalized_or_treated" value="no"> No</label>
-        </div>
+        <select name="hospitalized_or_treated" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
         <label>Auto Accident in Past 2 Years:</label>
-        <div class="radio-group">
-            <label><input type="radio" name="auto_accident_in_past_2_years" value="yes" required> Yes</label>
-            <label><input type="radio" name="auto_accident_in_past_2_years" value="no"> No</label>
-        </div>
+        <select name="auto_accident_in_past_2_years" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
-        <label>Trusted Form URL:</label>
-        <input type="text" name="trusted_form_cert_url">
+        <!-- TrustedForm field and script -->
+        <input type="hidden" id="trusted_form_cert_url" name="trusted_form_cert_url" />
+        <script type="text/javascript"
+                src="https://cdn.trustedform.com/trustedform.js?field=trusted_form_cert_url"
+                async>
+        </script>
 
         <input type="submit" value="Submit Lead">
     </form>

@@ -1,67 +1,67 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, render_template, request, jsonify
 import requests
 import os
 
 app = Flask(__name__)
 
-# Production endpoints
+# TrackDrive API URLs
 PING_URL = "https://synegence-llc.trackdrive.com/api/v1/inbound_webhooks/ping/check_for_available_mva_cpl_buyers"
 POST_URL = "https://synegence-llc.trackdrive.com/api/v1/inbound_webhooks/post/check_for_available_mva_cpl_buyers"
 
+# Hardcoded static values for all posts
+TRACKDRIVE_NUMBER = "+18882574485"
+TRAFFIC_SOURCE_ID = "1049"
+
 @app.route('/')
-def lead_form():
-    return render_template('lead_form.html')
+def index():
+    return render_template("lead_form.html")
 
 @app.route('/submit-lead', methods=['POST'])
 def submit_lead():
-    # Step 1: Prepare Ping data
-    ping_data = {
-        "trackdrive_number": request.form.get("trackdrive_number"),
-        "traffic_source_id": request.form.get("traffic_source_id"),
-        "caller_id": request.form.get("caller_id")
-    }
+    form_data = request.form.to_dict()
 
-    ping_response = requests.post(PING_URL, json=ping_data).json()
+    # Add hardcoded static values
+    form_data["trackdrive_number"] = TRACKDRIVE_NUMBER
+    form_data["traffic_source_id"] = TRAFFIC_SOURCE_ID
 
-    if not ping_response.get("success") or not ping_response.get("buyers"):
+    # Validate trusted form cert
+    trusted_form_url = form_data.get("trusted_form_cert_url", "").strip()
+    if not trusted_form_url:
         return jsonify({
             "success": False,
-            "message": "No buyers currently available",
-            "ping_response": ping_response
-        })
+            "error": "Trusted Form Cert URL is missing. Lead not submitted."
+        }), 400
 
-    # Step 2: Post data with ping_id and full lead info
-    post_data = {
-        **ping_data,
-        "ping_id": ping_response["buyers"][0]["ping_id"],
-
-        # Lead Details
-        "first_name": request.form.get("first_name"),
-        "last_name": request.form.get("last_name"),
-        "email": request.form.get("email"),
-        "state": request.form.get("state"),
-        "zip": request.form.get("zip"),
-
-        # Compliance & Matching Fields
-        "tcpa_opt_in": True,
-        "tcpa_optin_consent_language": request.form.get("tcpa_optin_consent_language"),
-        "accident_state": request.form.get("accident_state"),
-        "accident_date": request.form.get("accident_date"),
-        "has_insurance": request.form.get("has_insurance"),
-        "injury_occured": request.form.get("injury_occured"),
-        "hospitalized_or_treated": request.form.get("hospitalized_or_treated"),
-        "person_at_fault": request.form.get("person_at_fault"),
-        "currently_represented": request.form.get("currently_represented"),
-        "trusted_form_cert_url": request.form.get("trusted_form_cert_url")
+    # Ping request
+    ping_params = {
+        "trackdrive_number": TRACKDRIVE_NUMBER,
+        "traffic_source_id": TRAFFIC_SOURCE_ID,
+        "caller_id": form_data.get("caller_id")
     }
 
-    post_response = requests.post(POST_URL, json=post_data).json()
+    try:
+        ping_res = requests.get(PING_URL, params=ping_params, timeout=10)
+        ping_json = ping_res.json()
+    except Exception as e:
+        return jsonify({"success": False, "error": f"Ping request failed: {str(e)}"}), 500
 
-    return jsonify({
-        "success": post_response.get("success", False),
-        "post_response": post_response
-    })
+    if not ping_json.get("success") or "ping_id" not in ping_json.get("try_all_buyers", {}):
+        return jsonify({
+            "success": False,
+            "error": "Ping failed or no matching buyer available.",
+            "details": ping_json
+        }), 400
+
+    # Extract ping_id from response
+    ping_id = ping_json["try_all_buyers"]["ping_id"]
+    form_data["ping_id"] = ping_id
+
+    # Post lead data
+    try:
+        post_res = requests.post(POST_URL, data=form_data, timeout=10)
+        return jsonify(post_res.json()), post_res.status_code
+    except Exception as e:
+        return jsonify({"success": False, "error": f"Post request failed: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    # Flask production config (debug=False)
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=False)
+    app.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
