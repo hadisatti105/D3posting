@@ -16,16 +16,25 @@ def lead_form():
     return render_template('lead_form.html')
 
 
-# --- Submit Lead (Ping + Post + JSON Response) ---
+# --- Submit Lead (Ping → Post → JSON Response) ---
 @app.route('/submit-lead', methods=['POST'])
 def submit_lead():
     data = request.form.to_dict()
 
-    # Step 1: Ping TrackDrive
+    # Validate required field
+    if not data.get("caller_id"):
+        return jsonify({
+            "success": False,
+            "message": "Missing required field: caller_id"
+        }), 400
+
+    # Step 1: Ping TrackDrive to check buyer availability
     ping_params = {
         "trackdrive_number": TRACKDRIVE_NUMBER,
-        "traffic_source_id": TRAFFIC_SOURCE_ID
+        "traffic_source_id": TRAFFIC_SOURCE_ID,
+        "caller_id": data.get("caller_id")  # Required
     }
+
     ping_response = requests.get(TRACKDRIVE_PING_URL, params=ping_params).json()
 
     if not ping_response.get("success") or not ping_response.get("buyers"):
@@ -37,17 +46,17 @@ def submit_lead():
 
     ping_id = ping_response['buyers'][0]['ping_id']
 
-    # Step 2: Post to TrackDrive
+    # Step 2: Post full lead details
     post_payload = {
         "trackdrive_number": TRACKDRIVE_NUMBER,
         "traffic_source_id": TRAFFIC_SOURCE_ID,
         "ping_id": ping_id,
-        "first_name": data.get('first_name'),
-        "last_name": data.get('last_name'),
-        "email": data.get('email'),
-        "caller_id": data.get('caller_id'),
-        "state": data.get('state'),
-        "zip": data.get('zip'),
+        "first_name": data.get("first_name"),
+        "last_name": data.get("last_name"),
+        "email": data.get("email"),
+        "caller_id": data.get("caller_id"),
+        "state": data.get("state"),
+        "zip": data.get("zip"),
         "tcpa_opt_in": True,
         "tcpa_optin_consent_language": "I agree to be contacted by the provider."
     }
@@ -61,7 +70,7 @@ def submit_lead():
     }), 200
 
 
-# --- Start Flask ---
+# --- Run App (for Render compatibility) ---
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
