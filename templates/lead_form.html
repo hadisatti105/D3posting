@@ -3,6 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Submit Your Lead</title>
+    <style>
+    body {
+        background: #f4f6f8;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 40px 10px;
+    }
+
+    .container {
+        max-width: 720px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+        text-align: center;
+        color: #2d3e50;
+        margin-bottom: 30px;
+        font-size: 26px;
+    }
+
+    label {
+        font-weight: 600;
+        display: block;
+        margin: 15px 0 6px;
+        color: #34495e;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #f9f9f9;
+        font-size: 15px;
+        transition: border 0.2s ease-in-out;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="date"]:focus,
+    select:focus {
+        border-color: #007BFF;
+        outline: none;
+        background-color: #fff;
+    }
+
+    input[type="submit"] {
+        margin-top: 25px;
+        background-color: #007BFF;
+        color: white;
+        padding: 14px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 25px;
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+    }
+</style>
 </head>
 <body>
     <h2>Submit Your Lead</h2>
