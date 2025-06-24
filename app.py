@@ -1,65 +1,51 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, render_template, request, jsonify
 import requests
 
 app = Flask(__name__)
 
-# Constants
-TRACKDRIVE_PING_URL = 'https://synegence-llc.trackdrive.com/api/v1/inbound_webhooks/ping/check_for_available_mva_cpl_buyers'
-TRACKDRIVE_POST_URL = 'https://synegence-llc.trackdrive.com/api/v1/inbound_webhooks/post/check_for_available_mva_cpl_buyers'
+PING_URL = "https://synegence-llc.trackdrive.com/api/v1/inbound_webhooks/ping/check_for_available_mva_cpl_buyers"
+POST_URL = "https://synegence-llc.trackdrive.com/api/v1/inbound_webhooks/post/check_for_available_mva_cpl_buyers"
 
-@app.route('/')
+@app.route("/", methods=["GET"])
 def lead_form():
-    return render_template('lead_form.html')
+    return render_template("lead_form.html")
 
-@app.route('/submit-lead', methods=['POST'])
+@app.route("/submit-lead", methods=["POST"])
 def submit_lead():
+    # Extract form data
     data = request.form.to_dict()
-
-    # Hardcoded fields
-    data['trackdrive_number'] = '+18882574485'
-    data['traffic_source_id'] = '1049'
-
-    # PING request
-    ping_params = {
-        'trackdrive_number': data['trackdrive_number'],
-        'traffic_source_id': data['traffic_source_id'],
-        'caller_id': data['caller_id']
+    
+    # Required ping fields
+    ping_payload = {
+        "trackdrive_number": data.get("trackdrive_number"),
+        "traffic_source_id": data.get("traffic_source_id"),
+        "caller_id": data.get("caller_id"),
+        "trusted_form_cert_url": data.get("trusted_form_cert_url"),
     }
 
-    ping_response = requests.get(TRACKDRIVE_PING_URL, params=ping_params)
-    ping_result = ping_response.json()
+    # Ping to check buyer availability
+    ping_response = requests.post(PING_URL, json=ping_payload)
+    ping_data = ping_response.json()
 
-    if not ping_result.get('success'):
-        return jsonify({'message': 'Ping failed', 'ping_response': ping_result})
+    if not ping_data.get("success"):
+        return jsonify({
+            "message": "No buyers currently available",
+            "ping_response": ping_data,
+            "success": False
+        })
 
-    # POST payload
-    post_data = {
-        'trackdrive_number': data['trackdrive_number'],
-        'traffic_source_id': data['traffic_source_id'],
-        'caller_id': data['caller_id'],
-        'ping_id': ping_result['try_all_buyers'].get('ping_id'),
+    # Extract ping_id from response
+    ping_id = ping_data["try_all_buyers"]["ping_id"]
 
-        'first_name': data['first_name'],
-        'last_name': data['last_name'],
-        'email': data['email'],
-        'state': data['state'],
-        'zip': data['zip'],
-        'accident_state': data.get('accident_state'),
-        'accident_date': data.get('accident_date'),
-        'has_insurance': data.get('has_insurance'),
-        'injury_occured': data.get('injury_occured'),
-        'currently_represented': data.get('currently_represented'),
-        'person_at_fault': data.get('person_at_fault'),
-        'hospitalized_or_treated': data.get('hospitalized_or_treated'),
-        'auto_accident_in_past_2_years': data.get('auto_accident_in_past_2_years'),
-        'trusted_form_cert_url': data.get('trusted_form_cert_url'),
+    # Post fields – extend with more if needed
+    post_payload = {
+        **data,  # includes all fields from the form
+        "ping_id": ping_id
     }
 
-    post_response = requests.post(TRACKDRIVE_POST_URL, json=post_data)
-    post_result = post_response.json()
+    # Send the post
+    post_response = requests.post(POST_URL, json=post_payload)
+    return jsonify(post_response.json())
 
-    return jsonify({'message': 'Lead submitted', 'post_response': post_result})
-
-
-if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=10000)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)

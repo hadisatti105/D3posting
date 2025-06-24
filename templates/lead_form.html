@@ -1,148 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
     <title>Submit Your Lead</title>
-    <style>
-        body {
-            background: #eef2f7;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 40px 10px;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
-
-        form label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        form input,
-        form select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            background-color: #f9f9f9;
-            font-size: 15px;
-        }
-
-        form input[type="submit"] {
-            background-color: #007BFF;
-            color: white;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        form input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Submit Your Lead</h2>
-        <form method="POST" action="/submit-lead">
-            <label>Caller ID:</label>
-            <input type="text" name="caller_id" required>
+    <h2>Submit Your Lead</h2>
+    <form method="POST" action="/submit-lead">
+        <label>Trackdrive Number:</label>
+        <input type="text" name="trackdrive_number" value="+18882574485" required>
 
-            <label>First Name:</label>
-            <input type="text" name="first_name" required>
+        <label>Traffic Source ID:</label>
+        <input type="text" name="traffic_source_id" value="1049" required>
 
-            <label>Last Name:</label>
-            <input type="text" name="last_name" required>
+        <label>Caller ID:</label>
+        <input type="text" name="caller_id" required>
 
-            <label>Email:</label>
-            <input type="email" name="email" required>
+        <label>First Name:</label>
+        <input type="text" name="first_name" required>
 
-            <label>State (2-letter code):</label>
-            <input type="text" name="state" maxlength="2" required>
+        <label>Last Name:</label>
+        <input type="text" name="last_name" required>
 
-            <label>Zip Code:</label>
-            <input type="text" name="zip" required>
+        <label>Email:</label>
+        <input type="email" name="email" required>
 
-            <label>Accident State:</label>
-            <input type="text" name="accident_state">
+        <label>State (2-letter code):</label>
+        <input type="text" name="state" maxlength="2" required>
 
-            <label>Accident Date:</label>
-            <input type="date" name="accident_date">
+        <label>Zip Code:</label>
+        <input type="text" name="zip" required>
 
-            <label>Has Insurance:</label>
-            <select name="has_insurance">
-                <option value="">-- Select --</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
+        <label>Trusted Form URL:</label>
+        <input type="text" name="trusted_form_cert_url" required>
 
-            <label>Injury Occurred:</label>
-            <select name="injury_occured">
-                <option value="">-- Select --</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
+        <label>Has Insurance:</label>
+        <select name="has_insurance">
+            <option value="">--Select--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
 
-            <label>Currently Represented:</label>
-            <select name="currently_represented">
-                <option value="">-- Select --</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
+        <label>Injury Occurred:</label>
+        <select name="injury_occured">
+            <option value="">--Select--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
 
-            <label>Person at Fault:</label>
-            <select name="person_at_fault">
-                <option value="">-- Select --</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
+        <label>Currently Represented:</label>
+        <select name="currently_represented">
+            <option value="">--Select--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
 
-            <label>Hospitalized or Treated:</label>
-            <select name="hospitalized_or_treated">
-                <option value="">-- Select --</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
+        <label>Person at Fault:</label>
+        <select name="person_at_fault">
+            <option value="">--Select--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
 
-            <label>Auto Accident in Past 2 Years:</label>
-            <select name="auto_accident_in_past_2_years">
-                <option value="">-- Select --</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
+        <label>Hospitalized or Treated:</label>
+        <select name="hospitalized_or_treated">
+            <option value="">--Select--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
 
-            <label>Trusted Form URL:</label>
-            <input type="text" name="trusted_form_cert_url" required>
+        <label>Auto Accident in Past 2 Years:</label>
+        <select name="auto_accident_in_past_2_years">
+            <option value="">--Select--</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
 
-            <input type="submit" value="Submit Lead">
-        </form>
-    </div>
+        <input type="submit" value="Submit Lead">
+    </form>
 </body>
 </html>
