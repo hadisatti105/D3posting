@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,105 +6,94 @@
     <title>Submit Your Lead</title>
     <style>
         body {
-            background: #eef2f7;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 40px 10px;
+            background: #f4f7fa;
+            font-family: Arial, sans-serif;
+            padding: 40px;
         }
 
         .container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
             text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
-
-        form label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
+            margin-bottom: 25px;
             color: #333;
         }
 
-        form input[type="text"],
-        form input[type="email"],
-        form input[type="tel"],
-        form input[type="date"],
-        form select {
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+        }
+
+        input, select {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
+            margin-top: 5px;
+            border-radius: 5px;
             border: 1px solid #ccc;
-            border-radius: 6px;
-            background-color: #f9f9f9;
-            font-size: 15px;
+            margin-bottom: 20px;
         }
 
-        form input[type="submit"] {
+        input[type="submit"] {
             background-color: #007BFF;
             color: white;
-            padding: 14px 20px;
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s ease;
         }
 
-        form input[type="submit"]:hover {
+        input[type="submit"]:hover {
             background-color: #0056b3;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Submit Your Lead</h2>
-        <form method="POST" action="/submit-lead">
-            <label>Trackdrive Number:</label>
-            <input type="text" name="trackdrive_number" value="+18882574485" readonly required>
+<div class="container">
+    <h2>Submit Your Lead</h2>
+    <form method="POST" action="/submit-lead">
+        <label>Caller ID (Phone Number):</label>
+        <input type="text" name="caller_id" required>
 
-            <label>Traffic Source ID:</label>
-            <input type="text" name="traffic_source_id" value="1049" readonly required>
+        <label>First Name:</label>
+        <input type="text" name="first_name" required>
 
-            <label>Caller ID:</label>
-            <input type="tel" name="caller_id" required>
+        <label>Last Name:</label>
+        <input type="text" name="last_name" required>
 
-            <label>First Name:</label>
-            <input type="text" name="first_name" required>
+        <label>Email Address:</label>
+        <input type="email" name="email" required>
 
-            <label>Last Name:</label>
-            <input type="text" name="last_name" required>
+        <label>City:</label>
+        <input type="text" name="city" required>
 
-            <label>Email:</label>
-            <input type="email" name="email" required>
+        <label>State (2-letter code):</label>
+        <input type="text" name="state" maxlength="2" required>
 
-            <label>State (2-letter code):</label>
-            <input type="text" name="state" maxlength="2" required>
+        <label>Zip Code:</label>
+        <input type="text" name="zip" required>
 
-            <label>Zip Code:</label>
-            <input type="text" name="zip" required>
+        <label>Accident Type:</label>
+        <input type="text" name="accident_type" required>
 
-            <label>Trusted Form Cert URL:</label>
-            <input type="text" name="trusted_form_cert_url" required>
+        <label>Auto Accident in Past 2 Years:</label>
+        <select name="auto_accident_in_past_2_years" required>
+            <option value="">-- Select --</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
 
-            <input type="submit" value="Submit Lead">
-        </form>
-    </div>
+        <label>Trusted Form URL:</label>
+        <input type="text" name="trusted_form_cert_url" required>
+
+        <input type="submit" value="Submit Lead">
+    </form>
+</div>
 </body>
 </html>
